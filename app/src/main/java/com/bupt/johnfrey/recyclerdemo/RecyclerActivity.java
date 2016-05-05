@@ -29,17 +29,8 @@ public class RecyclerActivity extends Activity implements PersonAdapter.Recycler
         rvRecycler = (RecyclerView) findViewById(R.id.rv_recycler);
         rvRecycler.setHasFixedSize(true);
         btnAdd = (Button) findViewById(R.id.btn_add);
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                i++;
-                Person person = new Person(i, "JohnF" + i, 10 + i);
-                personList.add(1, person);
-                adapter.notifyItemInserted(1);
-                adapter.notifyItemRangeChanged(1, adapter.getItemCount());
-            }
-        });
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvRecycler.setLayoutManager(layoutManager);
 
@@ -48,12 +39,22 @@ public class RecyclerActivity extends Activity implements PersonAdapter.Recycler
         adapter.setOnRecyclerViewListener(this);
         rvRecycler.setAdapter(adapter);
 
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                i++;
+                Person person = new Person(i, "JohnF#" + i, 10 + i);
+                personList.add(adapter.getItemCount(), person);
+                rvRecycler.smoothScrollToPosition(rvRecycler.getBottom());
+                adapter.notifyItemInserted(adapter.getItemCount());
+            }
+        });
     }
 
 
     private void initData() {
         for (; i < 30; ++i) {
-            Person person = new Person(i, "JohnF" + i, 10 + i);
+            Person person = new Person(i, "JohnF#" + i, 10 + i);
             personList.add(person);
         }
     }
