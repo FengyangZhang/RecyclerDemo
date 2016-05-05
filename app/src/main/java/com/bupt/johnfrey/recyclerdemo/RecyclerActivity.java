@@ -15,7 +15,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecyclerActivity extends Activity implements PersonAdapter.OnRecyclerViewListener {
+public class RecyclerActivity extends Activity implements PersonAdapter.RecyclerViewImp {
     private List<Person> personList = new ArrayList<>();
     private int i;
     private PersonAdapter adapter;
@@ -58,6 +58,7 @@ public class RecyclerActivity extends Activity implements PersonAdapter.OnRecycl
         }
     }
 
+    //implement the interface in adapter to respond to events
     @Override
     public void onItemClick(int position) {
         Toast.makeText(this, "short clicked: " + position, Toast.LENGTH_SHORT).show();
